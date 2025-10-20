@@ -23,7 +23,7 @@ phases:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
-      -cd my-
+      - cd my-webapp
       - mvn install
     finally:
       - echo This always runs even if the install command fails
@@ -31,31 +31,3 @@ phases:
     commands:
       - echo Entered the post_build phase...
       - echo Build completed on `date`
-
-reports:
-  arn:aws:codebuild:ca-central-1:497620407187:report-group/report-group-name-1:
-    files:
-      - "**/*"
-    base-directory: "target/tests/reports"
-    discard-paths: no
-  reportGroupCucumberJson:
-    files:
-      - "cucumber/target/cucumber-tests.xml"
-    discard-paths: yes
-    file-format: CUCUMBERJSON # default is JUNITXML
-artifacts:
-  files:
-    - target/messageUtil-1.0.jar
-  discard-paths: yes
-  secondary-artifacts:
-    artifact1:
-      files:
-        - target/artifact-1.0.jar
-      discard-paths: yes
-    artifact2:
-      files:
-        - target/artifact-2.0.jar
-      discard-paths: yes
-cache:
-  paths:
-    - "/root/.m2/**/*"

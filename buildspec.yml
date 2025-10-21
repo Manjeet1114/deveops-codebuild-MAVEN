@@ -1,36 +1,32 @@
 version: 0.2
 
-env:
-  variables:
-    JAVA_HOME: "/usr/lib/jvm/java-1.8.0"
-    PATH: "$JAVA_HOME/bin:$PATH"
+# env:
+#   variables:
+#     JAVA_HOME: "/usr/lib/jvm/java-17-amazon-corretto"
+#     PATH: "/usr/lib/jvm/java-17-amazon-corretto/bin:$PATH"
+# parameter-store:
+#   LOGIN_PASSWORD: /CodeBuild/dockerLoginPassword
 
 phases:
   install:
     commands:
-      - echo "Entered the install phase..."
-      - echo "Skipping system updates — not needed for this image"
-    finally:
-      - echo "Install phase completed"
-
+      - echo Entered the install phase...
+      - echo This always runs even if the update or install command fails
   pre_build:
     commands:
-      - echo "Entered the pre_build phase..."
-      - echo "Preparing for build..."
+      - echo Entered the pre_build phase...
+      # - docker login -u User -p $LOGIN_PASSWORD
     finally:
-      - echo "Pre-build phase completed"
-
+      - echo This always runs even if the login command fails
   build:
     commands:
-      - echo "Entered the build phase..."
-      - echo "Build started on $(date)"
+      - echo Entered the build phase...
+      - echo Build started on `date`
       - cd my-webapp
-      - echo "Running Maven build..."
       - mvn clean install
     finally:
-      - echo "Build phase completed"
-
+      - echo This always runs even if the install command fails
   post_build:
     commands:
-      - echo "Entered the post_build phase..."
-      - echo "Build completed successfully on $(date)"
+      - echo Entered the post_build phase...
+      - echo Build completed on `date`

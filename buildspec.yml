@@ -8,26 +8,33 @@ env:
 phases:
   install:
     commands:
-      - echo Entered the install phase...
-      - apt-get update -y
-      - apt-get install -y maven
+      - echo "Entered the install phase..."
+      - echo "Updating packages..."
+      - yum update -y
+      - echo "Installing Maven..."
+      - yum install -y maven
     finally:
-      - echo This always runs even if the update or install command fails
+      - echo "This always runs even if the update or install command fails"
+
   pre_build:
     commands:
-      - echo Entered the pre_build phase...
-      #- login -u User -p $LOGIN_PASSWORD
+      - echo "Entered the pre_build phase..."
+      # - echo "You can add login or setup commands here"
     finally:
-      - echo This always runs even if the login command fails
+      - echo "This always runs even if the pre_build command fails"
+
   build:
     commands:
-      - echo Entered the build phase...
-      - echo Build started on `date`
+      - echo "Entered the build phase..."
+      - echo "Build started on $(date)"
       - cd my-webapp
-      - mvn install
+      - echo "Running Maven install..."
+      - mvn clean install
     finally:
-      - echo This always runs even if the install command fails
+      - echo "This always runs even if the build command fails"
+
   post_build:
     commands:
-      - echo Entered the post_build phase...
-      - echo Build completed on `date`
+      - echo "Entered the post_build phase..."
+      - echo "Build completed on $(date)"
+      # - echo "You can add artifact upload or deploy steps here"
